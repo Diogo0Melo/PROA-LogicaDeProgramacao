@@ -9,19 +9,18 @@ programa
 		 * números 24 e 42 (incluindo os valores 24 e 42) e quantos deles estão fora deste intervalo.
 		 */
 
-		cadeia numerosValidos=""
-		inteiro valor
+		inteiro numerosValidos=0, numerosInvalidos=0, valor
 		
 		para(inteiro i = 0; i < 10; i++){
 			escreva("Digite um valor: ")
 			leia(valor)
 
 			se(valor >= 24 e valor <= 42){
-				se(i == 9) numerosValidos += valor
-				senao numerosValidos += ""+valor+" - "
-			}
+				numerosValidos++
+			}senao numerosInvalidos++
 		}
-		escreva("Os valores válidos informados foram: \n"+numerosValidos)
+		escreva("A quantidade de números validos informada foi: ",numerosValidos)
+		escreva("\nA quantidade de números inválidos informada foi: ",numerosInvalidos)
 	}
 }
 /* $$$ Portugol Studio $$$ 
@@ -29,7 +28,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 597; 
+ * @POSICAO-CURSOR = 458; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
