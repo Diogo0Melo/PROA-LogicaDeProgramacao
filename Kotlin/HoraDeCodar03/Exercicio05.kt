@@ -1,21 +1,23 @@
 package HoraDeCodar03
 
 fun main(){
-    /*
-    Escreva um programa para ler 2 notas de um aluno, calcular e imprimir a média final. Considere que a nota de aprovação é 9,5. Logo após escrever a mensagem "Calcular a média de outro aluno Sim/Não?" e solicitar um resposta. Se a resposta for "S", o programa deve ser executado novamente, caso contrário deve ser encerrado exibindo a quantidade de alunos aprovados.
-     */
-    do{
-        println("Digite a primeira nota do aluno: ")
-        val nota1: Double = readln().toDouble()
+  /*
+  Faça um algoritmo que calcule e escreva a média aritmética dos dois números inteiros informados pelo usuário e todos os números inteiros entre eles. Considere que o primeiro sempre será menor que o segundo.
+   */
 
-        println("Digite a segunda nota do aluno: ")
-        val nota2: Double = readln().toDouble()
+    println("Digite o primeiro número: ")
+    val valor1 = readln().toInt()
 
-        val resultado = (nota1 + nota2) / 2.0
-        if(resultado >= 9.5) println("Aluno aprovado!")
-        else println("Aluno reprovado!")
+    println("Digite o segundo número: ")
+    val valor2 = readln().toInt()
 
-        println("Calcular a média de outro aluno Sim/Não?")
-        val opcao = readln()
-    }while (opcao == "s" || opcao == "S" || opcao == "sim" || opcao == "SIM" || opcao == "sIm" || opcao == "SiM" || opcao == "sIM" || opcao == "Sim" || opcao == "SIm" || opcao == "siM")
+    var divisor: Int = 0
+    var soma: Int = 0
+
+    for (i in valor1..valor2){
+        divisor++
+        soma += i
+    }
+
+    println("A média aritimética da soma dos valores entre $valor1 e $valor2 é ${soma/divisor}")
 }
