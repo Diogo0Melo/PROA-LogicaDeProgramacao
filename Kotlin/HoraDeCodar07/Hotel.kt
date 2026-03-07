@@ -37,13 +37,13 @@ fun main() {
 fun inicio() {
     if (nomeFuncionario == "") logar()
     println("Bem-vindo ao Hotel {Hotel}, $nomeFuncionario. É um imenso prazer ter você por aqui!")
-    println("1. Cadastrar Hóspedes - 2. Reservar Quarto - 3. Abastecimento de Automóveis - 4. Sair do Hotel")
+    println("1. Menu de Hóspedes - 2. Reservar Quarto - 3. Abastecimento de Automóveis - 4. Sair do Hotel")
     println("Escolha uma opção:")
     // A varival escolha armazena a opção escolhida pelo usuário.
     // uma variavel local é utilizada apenas dentro da função inicio().
     val escolha = readln().toIntOrNull()
     return when (escolha) {
-        1 -> cadastrarHospedes()
+        1 -> menuHospedes()
         2 -> reservarQuarto()
         3 -> AbastecimentoDeAutomoveis()
         4 -> sairDoHotel()
@@ -65,6 +65,28 @@ fun logar() {
     nomeFuncionario = nomeUsuario
 }
 
+fun menuHospedes() {
+    println("MENU DE HÓSPEDES\n")
+    println("1. Cadastrar Hóspedes - 2. Pesquisar Hóspedes - 3. Listar Hóspedes Cadastrados - 4. Deletar Registro do Hóspede - 5. Voltar ao Menu Principal")
+    println("Escolha uma opção:")
+    val escolha = readln().toIntOrNull()
+    return when (escolha) {
+        1 -> cadastrarHospedes()
+        2 -> pesquisarHospedes()
+        3 -> listarHospedesCadastrados()
+        4 -> excluirHospede()
+        5 -> {
+            println("Retornando ao menu principal.")
+            enter()
+            inicio()
+        }
+        else -> {
+            println("Opção inválida. Por favor, escolha uma opção entre 1 e 5.")
+            menuHospedes()
+        }
+    }
+}
+
 fun cadastrarHospedes() {
     val listaHospedesCadastrados = mutableListOf<Hospede>()
     while (true) {
@@ -81,10 +103,10 @@ fun cadastrarHospedes() {
                     if (it.idade < 6) qtdGratuidades++
                     else if (it.idade > 60) qtdMeiaEntrada++
                 }
-                println("Direito há $qtdGratuidades gratuidades e $qtdMeiaEntrada meias entradas para os hóspedes cadastrados.")
+                println("Direito há $qtdGratuidades gratuidades e $qtdMeiaEntrada meia entradas para os hóspedes cadastrados.")
             }
             enter()
-            return inicio()
+            return menuHospedes()
         } else {
             val idade = pedirIdade()
             listaHospedesCadastrados.add(Hospede(nome = nomeHospede, idade = idade, quarto = null))
@@ -111,6 +133,56 @@ fun pedirIdade(): Int {
         return pedirIdade()
     }
     return idade
+}
+
+fun pesquisarHospedes() {
+    println("PESQUISA DE HÓSPEDES\n")
+    println("Digite o nome do hóspede para pesquisar ou 'VOLTAR' para retornar ao menu de hóspedes: ")
+    val nomePesquisa = readln()
+    if (nomePesquisa.uppercase() == "VOLTAR") {
+        println("Retornando ao menu de hóspedes.")
+        enter()
+        return menuHospedes()
+    }
+    val hospedeEncontrado = HOSPEDES_CADASTRADOS.find { it.nome.equals(nomePesquisa, ignoreCase = true) }
+    if (hospedeEncontrado != null) {
+        println("Hóspede encontrado: ${hospedeEncontrado.nome}, Idade: ${hospedeEncontrado.idade}, Quarto: ${hospedeEncontrado.quarto?.numero ?: "Não hospedado"}")
+    } else {
+        println("Hóspede não encontrado. Por favor, tente novamente.")
+    }
+    enter()
+    return pesquisarHospedes()
+}
+
+fun listarHospedesCadastrados(){
+    println("HÓSPEDES CADASTRADOS\n")
+    if (HOSPEDES_CADASTRADOS.isEmpty()) {
+        println("Nenhum hóspede cadastrado.")
+    } else {
+        HOSPEDES_CADASTRADOS.forEach { println("Nome: ${it.nome}, Idade: ${it.idade}, Quarto: ${it.quarto?.numero ?: "Não hospedado"}") }
+    }
+    enter()
+    return menuHospedes()
+}
+
+fun excluirHospede() {
+    println("DELETAR REGISTRO DO HÓSPEDE\n")
+    println("Digite o nome do hóspede para deletar ou 'VOLTAR' para retornar ao menu de hóspedes: ")
+    val nomeDeletar = readln()
+    if (nomeDeletar.uppercase() == "VOLTAR") {
+        println("Retornando ao menu de hóspedes.")
+        enter()
+        return menuHospedes()
+    }
+    val hospedeEncontrado = HOSPEDES_CADASTRADOS.find { it.nome.equals(nomeDeletar, ignoreCase = true) }
+    if (hospedeEncontrado != null) {
+        HOSPEDES_CADASTRADOS.remove(hospedeEncontrado)
+        println("Hóspede ${hospedeEncontrado.nome} removido com sucesso.")
+    } else {
+        println("Hóspede não encontrado. Por favor, tente novamente.")
+    }
+    enter()
+    return excluirHospede()
 }
 
 fun reservarQuarto() {
@@ -164,6 +236,11 @@ fun selecionarHospedes(): MutableList<Hospede> {
             }
 
             return listaHospedes
+        }
+        else if(listaHospedes.size == 15){
+            println("Limite máximo de 15 hóspedes por reserva/quarto atingido. Por favor encerre os registros.")
+            enter()
+            continue
         }
         val hospede = HOSPEDES_CADASTRADOS.find { it.nome.equals(nomeHospede, ignoreCase = true) }
         if (hospede != null) {
