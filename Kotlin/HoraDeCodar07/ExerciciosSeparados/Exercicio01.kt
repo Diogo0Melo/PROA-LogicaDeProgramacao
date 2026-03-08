@@ -3,6 +3,7 @@ package HoraDeCodar07.ExerciciosSeparados
 // 1) Quantos quartos são?
 
 fun reservarQuarto() {
+    println("RESERVA DE QUARTO\n")
     val valorDiaria = solicitarValorDiaria()
     val qtdDiasHospedagem = solicitarQtdDiasHospedagem()
 
