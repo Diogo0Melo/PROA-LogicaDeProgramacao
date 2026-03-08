@@ -65,8 +65,8 @@ var nomeFuncionario: String = ""
 
 fun inicio() {
     if (nomeFuncionario == "") logar()
-    println("Bem-vindo ao Hotel {Hotel}, $nomeFuncionario. É um imenso prazer ter você por aqui!")
-    println("1. Menu de Hóspedes - 2. Reservar Quarto - 3. Reservar Espaço para Eventos - 4. Sair do Hotel")
+    println("Bem-vindo ao Tasokare Hotel, $nomeFuncionario. É um imenso prazer ter você por aqui!")
+    println("1. Menu de Hóspedes - 2. Reservar Quarto - 3. Reservar Espaço para Eventos - 4. Abastecimento de Automóveis - 5. Sair do Hotel")
     println("Escolha uma opção:")
     // A varival escolha armazena a opção escolhida pelo usuário.
     // uma variavel local é utilizada apenas dentro da função inicio().
@@ -75,8 +75,9 @@ fun inicio() {
         1 -> menuHospedes()
         2 -> reservarQuarto()
         3 -> reservarEspacoEventos()
-        4 -> sairDoHotel()
-        else -> erro()
+        4 -> abastecimentoDeAutomoveis()
+        5 -> sairDoHotel()
+        else -> erroMenuPrincipal()
     }
 }
 
@@ -104,16 +105,8 @@ fun menuHospedes() {
         2 -> pesquisarHospedes()
         3 -> listarHospedesCadastrados()
         4 -> excluirHospede()
-        5 -> {
-            println("Retornando ao menu principal.")
-            enter()
-            inicio()
-        }
-
-        else -> {
-            println("Opção inválida. Por favor, escolha uma opção entre 1 e 5.")
-            menuHospedes()
-        }
+        5 -> voltarAoMenuPrincipal()
+        else -> erroMenuHospedes()
     }
 }
 
@@ -612,14 +605,56 @@ fun calcularCustoBuffet(precoCafe: Double, precoAgua: Double, precoSalgados: Dou
     return precoTotalBuffet
 }
 
-fun AbastecimentoDeAutomoveis() {
+fun abastecimentoDeAutomoveis() {
+    val postosDisponiveis = arrayOf("Posto Wayne Oil", "Posto Stark Petrol")
 
+    println("ABASTECIMENTO DE AUTOMÓVEIS\n")
+
+    println("Qual o valor do álcool no posto ${postosDisponiveis[0]}?")
+    val valorAlcoolWayne = readln().toDoubleOrNull()
+
+    println("Qual o valor da gasolina no posto ${postosDisponiveis[0]}?")
+    val valorGasolinaWayne = readln().toDoubleOrNull()
+
+    println("Qual o valor do álcool no posto ${postosDisponiveis[1]}?")
+    val valorAlcoolStark = readln().toDoubleOrNull()
+
+    println("Qual o valor da gasolina no posto ${postosDisponiveis[1]}?")
+    val valorGasolinaStark = readln().toDoubleOrNull()
+
+    if (valorAlcoolWayne == null || valorGasolinaWayne == null || valorAlcoolStark == null || valorGasolinaStark == null) {
+        println("Valor inválido. Por favor, informe um número válido para os preços dos combustíveis.")
+        return abastecimentoDeAutomoveis()
+    }
+
+    val melhorPrecoAlcool = if (valorAlcoolWayne < valorAlcoolStark) valorAlcoolWayne else valorAlcoolStark
+    val melhorPrecoGasolina = if (valorGasolinaWayne < valorGasolinaStark) valorGasolinaWayne else valorGasolinaStark
+    val melhorPrecoCombustivel = if (melhorPrecoAlcool / melhorPrecoGasolina < 0.7) "álcool" else "gasolina"
+
+    when (melhorPrecoCombustivel) {
+        "álcool" -> println("$nomeFuncionario, é mais barato abastecer com álcool no posto ${postosDisponiveis[0]}")
+        "gasolina" -> println("$nomeFuncionario, é mais barato abastecer com gasolina no posto ${postosDisponiveis[1]}")
+    }
+
+    enter()
+    return inicio()
 }
 
 
-fun erro() {
-    println("Por favor, informe um número entre 1 e 4.")
+fun erroMenuPrincipal() {
+    println("Por favor, informe um número entre 1 e 6.")
     return inicio()
+}
+
+fun erroMenuHospedes() {
+    println("Por favor, informe um número entre 1 e 5.")
+    return menuHospedes()
+}
+
+fun voltarAoMenuPrincipal(){
+    println("Retornando ao menu principal.")
+    enter()
+    inicio()
 }
 
 fun sairDoHotel() {
