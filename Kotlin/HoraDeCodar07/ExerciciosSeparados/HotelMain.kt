@@ -13,7 +13,8 @@ fun main() {
 
 fun inicio() {
     print("Bem vindo ao $NOME_HOTEL!\n")
-    println("1 - Reservar Quarto; 2 - Cadastrar Hóspedes; 3 - Menu Hóspedes; 4 - Reservar Auditório, 5 - Calcular Posto Mais Barato")
+    println("1 - Reservar Quarto; 2 - Cadastrar Hóspedes; 3 - Menu Hóspedes; 4 - Reservar Auditório")
+    println("5 - Calcular Posto Mais Barato; 6 - Calcular Manutenção Ar-Condicionados; 7 - Sair")
     println("Escolha uma opção:")
     // A varival escolha armazena a opção escolhida pelo usuário.
     // uma variavel local é utilizada apenas dentro da função inicio().
@@ -24,7 +25,8 @@ fun inicio() {
         3 -> menuHospedes()
         4 -> reservarAuditorio()
         5 -> abastecimentoDeAutomoveis()
-        6 -> sairDoHotel()
+        6 -> manutencaoArCondicionados()
+        7 -> sairDoHotel()
         else -> erro()
     }
 }
@@ -58,7 +60,7 @@ fun cadastrarQuartos():Array<Map<String, String>> {
 }
 
 fun erro() {
-    println("Por favor, informe um número entre 1 e 4.")
+    println("Por favor, informe um número entre 1 e 7.")
     inicio()
 }
 
