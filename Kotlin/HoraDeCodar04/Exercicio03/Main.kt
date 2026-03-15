@@ -17,7 +17,6 @@ private fun main() {
 
 private fun exibirFrutas() {
     val frutasNoIdioma = solicitarIdioma()
-    //val frutasNoIdioma = FRUTAS.map { it to it }
     frutasNoIdioma.forEachIndexed { index, fruta ->
         val frutaFormatada = centralizar((fruta) as String)
         if ((index + 1) % 6 == 0) print("$frutaFormatada\n")
