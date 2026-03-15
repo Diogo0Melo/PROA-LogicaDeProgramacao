@@ -26,7 +26,18 @@ val FRUTAS = mutableListOf(
         "Parachichi",
         "Abukado"
     ),
-    Fruta("Abacaxi", "Pineapple", "Pina", "Ananas", "Nanas", "Ananas", "Ananas", "Ananas", "Nanasi", "Pinya"),
+    Fruta(
+        "Abacaxi",
+        "Pineapple",
+        "Pina",
+        "Ananas",
+        "Nanas",
+        "Ananas",
+        "Ananas",
+        "Ananas",
+        "Nanasi",
+        "Pinya"
+    ),
     Fruta("Acai", "Acai", "Asai", "Acai", "Acai", "Acai", "Acai", "Acai", "Acai", "Acai"),
     Fruta("Acerola", "Acerola", "Acerola", "Acerola", "Acerola", "Acerola", "Aserola", "Acerola", "Acerola", "Aserola"),
     Fruta("Ameixa", "Plum", "Ciruela", "Prune", "Plum", "Pflaume", "Erik", "Prugna", "Plamu", "Sirwela"),
