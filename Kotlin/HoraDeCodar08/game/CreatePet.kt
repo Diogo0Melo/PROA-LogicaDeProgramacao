@@ -1,19 +1,31 @@
 package HoraDeCodar08.game
 
-import HoraDeCodar08.animals.Cat
-import HoraDeCodar08.animals.Dog
-import HoraDeCodar08.animals.Rabbit
+import HoraDeCodar08.animals.*
 import HoraDeCodar08.base.Pet
+import HoraDeCodar08.utils.pressEnterToContinue
+import HoraDeCodar08.utils.wait
 
 fun choosePet() {
     println("BEM VINDO AO JOGO DE PET VIRTUAL!")
     println("Escolha seu pet:")
-    println("Cachorro - Gato - Coelho")
+    println("Cachorro - Gato - Coelho - Calopsita - Papagaio - Galinha - Doninha")
+    println("Pato - Peixe Dourado - Ganso - Hamster - Cavalo - Porco - Furão")
     val choice = readln().lowercase()
     return when (choice.lowercase()) {
         "cachorro" -> setPetName("cachorro")
         "gato" -> setPetName("gato")
         "coelho" -> setPetName("coelho")
+        "calopsita" -> setPetName("calopsita")
+        "papagaio" -> setPetName("papagaio")
+        "galinha" -> setPetName("galinha")
+        "doninha" -> setPetName("doninha")
+        "pato" -> setPetName("pato")
+        "peixe dourado" -> setPetName("peixe dourado")
+        "ganso" -> setPetName("ganso")
+        "hamster" -> setPetName("hamster")
+        "cavalo" -> setPetName("cavalo")
+        "porco" -> setPetName("porco")
+        "furão" -> setPetName("furão")
         else -> {
             println("Opção inválida, escolha um pet válido.")
             choosePet()
@@ -28,12 +40,25 @@ fun setPetName(species: String) {
         "cachorro" -> runVirtualPet(Dog(name))
         "gato" -> runVirtualPet(Cat(name))
         "coelho" -> runVirtualPet(Rabbit(name))
+        "calopsita" -> runVirtualPet(Cockatiel(name))
+        "papagaio" -> runVirtualPet(Parrot(name)) // Assuming Papagaio is also a Calopsita for now
+        "galinha" -> runVirtualPet(Chicken(name))
+        "Doninha" -> runVirtualPet(Weasel(name))
+        "pato" -> runVirtualPet(Duck(name))
+        "peixe dourado" -> runVirtualPet(Goldfish(name))
+        "ganso" -> runVirtualPet(Goose(name))
+        "hamster" -> runVirtualPet(Hamster(name))
+        "cavalo" -> runVirtualPet(Horse(name))
+        "porco" -> runVirtualPet(Pig(name))
+        "Furão" -> runVirtualPet(Ferret(name))
         else -> throw IllegalArgumentException("Espécie inválida.") // Nunca deve acontecer, pois a função escolherPet já valida as opções
     }
 }
 
 fun runVirtualPet(pet: Pet) {
-    println("Parabéns! Você escolheu um ${pet.species} chamado ${pet.name}!")
+    wait("ADOTANDO", 5)
+    println("Parabéns! Você adotou um ${pet.species} chamado ${pet.name}!")
+    pressEnterToContinue()
     VirtualPet(pet)
     return
 }
