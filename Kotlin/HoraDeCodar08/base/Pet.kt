@@ -13,7 +13,7 @@ abstract class Pet {
     private var trainingLevel: Int = 0
 
 
-    fun feed(food: Map<String, Int>) {
+    fun feed(food: Map<String, Int>, hours: Int) {
         println("Você alimentou ${this.name} com ${food.keys.first()}")
         this.reduceHunger(food)
         this.increaseTiredness()

@@ -24,25 +24,30 @@ class VirtualPet(val pet: Pet, var currentTime: Int = 6) {
             pressEnterToContinue()
             return menu()
         }
+        val duration = if (choice != null && choice in 2..3) this.requestDuration() else 1
         return when (choice) {
             1 -> {
-                pet.feed(mapOf("BiscoitoScooby" to 10))
-                this.increaseTime()
+                wait("ALIMENTANDO", duration)
+                pet.feed(mapOf("BiscoitoScooby" to 10), duration)
+                this.increaseTime(duration)
                 this.menu()
             }
 
             2 -> {
-
-                pet.play(this.requestDuration())
+                wait("BRINCANDO", duration)
+                pet.play(duration)
+                this.increaseTime(duration)
                 this.menu()
             }
 
             3 -> {
                 if (this.currentTime >= 22)
                     finishDay()
-                else
-                    pet.sleep(this.requestDuration())
-
+                else {
+                    wait("DORMINDO", duration)
+                    pet.sleep(duration)
+                    this.increaseTime(duration)
+                }
                 this.menu()
             }
 
@@ -64,26 +69,23 @@ class VirtualPet(val pet: Pet, var currentTime: Int = 6) {
     }
 
     private fun requestDuration(): Int {
-        while (true) {
-            println("Por quanto tempo você deseja fazer esta atividade com ${pet.name}?")
-            val duration = readln().toIntOrNull()
-            if (duration == null) {
-                println("Precisa ser um número inteiro.")
-                pressEnterToContinue()
-                return this.requestDuration()
-            } else if (this.currentTime + duration > 22) {
-                println("Você só pode realizar ações com seu pet até as 22h")
-                pressEnterToContinue()
-                return this.requestDuration()
-            }
-            this.increaseTime(duration)
-            return duration
+        println("Por quanto tempo você deseja fazer esta atividade com ${pet.name}?")
+        val duration = readln().toIntOrNull()
+        if (duration == null || duration <= 0) {
+            println("Precisa ser um número inteiro e maior que zero.")
+            pressEnterToContinue()
+            return this.requestDuration()
+        } else if (this.currentTime + duration > 22) {
+            println("Você só pode realizar ações com seu pet até as 22h")
+            pressEnterToContinue()
+            return this.requestDuration()
         }
+        return duration
     }
 
     private fun finishDay(hours: Int = 8) {
         println("Você e ${pet.name} foram dormir até o amanhecer do novo dia!")
-        wait("DORMINDO", 8)
+        wait("DORMINDO", hours)
         this.pet.sleep(hours)
         this.pet.haveBirthday()
         this.setTime()
