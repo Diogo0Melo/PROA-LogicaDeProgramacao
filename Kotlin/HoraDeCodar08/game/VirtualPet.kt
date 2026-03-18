@@ -8,14 +8,16 @@ import kotlin.system.exitProcess
 
 class VirtualPet(val pet: Pet) {
     var currentTime: Int = 6; private set
-
+    var validations = Validation(pet)
     init {
         menu()
     }
 
     private fun menu() {
-        val gameOver = Validations().validateGameOver(pet)
+        val gameOver = validations.validateGameOver()
+        val win = validations.validateWin()
         if (gameOver.isNotEmpty()) finishGame(gameOver)
+        else if (win.isNotEmpty()) finishGame(win)
         println("Hora atual: ${currentTime.toString().padStart(2, '0')}:00")
         println("O que você gostaria de fazer com seu pet?")
         println("1 - Alimentar ${pet.name}")
@@ -25,7 +27,7 @@ class VirtualPet(val pet: Pet) {
         println("5 - Dormir com ${pet.name} (encerrar o dia)")
         println("6 - Abandonar ${pet.name} (sair do jogo)")
         val choice = readln().toIntOrNull()
-        if (currentTime >= 22 && choice !in 3..4) {
+        if (currentTime >= 22 && choice !in 4..6) {
             println("A partir das 22h não é possível realizar mais nenhuma tarefa que não seja dormir!")
             pressEnterToContinue()
             return menu()
@@ -107,13 +109,17 @@ class VirtualPet(val pet: Pet) {
         return
     }
 
-    private fun finishGame(gameOver: Map<String, String>) {
-        println(gameOver["reason"])
+    private fun finishGame(reason: Map<String, String>) {
+        if (reason["whatHappened"] == "gameOver") println(reason["reason"])
+        else if (reason["whatHappened"] == "win") println(reason["reason"])
         pressEnterToContinue()
         return main()
     }
 
-    private fun increaseTime(hours: Int = 1) = currentTime.plus(hours)
+    private fun increaseTime(hours: Int = 1) {
+        currentTime += hours
+        return
+    }
 
     private fun setTime(hours: Int = 6) {
         currentTime = hours

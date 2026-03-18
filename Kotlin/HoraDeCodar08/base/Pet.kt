@@ -6,11 +6,26 @@ abstract class Pet {
     abstract val species: String
     abstract val name: String
     var age: Int = 0; private set
-    var hungerLevel: Int = 50; private set
-    var happinessLevel: Int = 50; private set
-    var affinityLevel: Int = 0; private set
-    var tirednessLevel: Int = 0; private set
-    var trainingLevel: Int = 0; private set
+    var hungerLevel: Int = 50
+        private set(value) {
+            field = if (value < 0) 0 else value
+        }
+    var happinessLevel: Int = 50
+        private set(value) {
+            field = if (value > 100) 100 else value
+        }
+    var affinityLevel: Int = 0
+        private set(value) {
+            field = if (value < 0) 0 else if (value > 100) 100 else value
+        }
+    var tirednessLevel: Int = 0
+        private set(value) {
+            field = if (value < 0) 0 else value
+        }
+    var trainingLevel: Int = 0
+        private set(value) {
+            field = if (value < 0) 0 else if (value > 100) 100 else value
+        }
 
     fun feed(food: Map<String, Int>, hours: Int) {
         println("Você alimentou $name com ${food.keys.first()}")
@@ -34,6 +49,7 @@ abstract class Pet {
     fun sleep(hours: Int) {
         println("$name dormiu por $hours horas")
         reduceTiredness(hours)
+        reduceHappiness(hours)
         increaseHunger(hours)
         pressEnterToContinue()
         return
@@ -43,6 +59,7 @@ abstract class Pet {
         println("INFORMAÇÕES ATUAIS DO PET")
         println("Espécie: $species")
         println("Nome: $name")
+        println("Idade: $age")
         println("Nível de Fome: $hungerLevel")
         println("Nível de Felicidade: $happinessLevel")
         println("Nível de Afinidade: $affinityLevel")
@@ -97,8 +114,8 @@ abstract class Pet {
     }
 
     private fun reduceTiredness(hours: Int) {
-        val pointsChanged = hours * 5
-        tirednessLevel += pointsChanged
+        val pointsChanged = hours * 13
+        tirednessLevel -= pointsChanged
         println("O cansaço de $name reduziu em $pointsChanged pontos")
         return
     }
