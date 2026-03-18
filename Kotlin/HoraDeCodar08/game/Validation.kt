@@ -10,6 +10,11 @@ class Validation(private val pet: Pet) {
             mapOf("whatHappened" to "gameOver", "reason" to "Seu ${pet.species} ${pet.name} morreu de cansaço!")
         } else if (pet.happinessLevel <= 0) {
             mapOf("whatHappened" to "gameOver", "reason" to "Seu ${pet.species} ${pet.name} morreu de tristeza!")
+        } else if (pet.natureCallsLevel >= 100) {
+            mapOf(
+                "whatHappened" to "gameOver",
+                "reason" to "Seu ${pet.species} ${pet.name} explodiu porquê não foi ao banheiro!"
+            )
         } else mapOf()
     }
 

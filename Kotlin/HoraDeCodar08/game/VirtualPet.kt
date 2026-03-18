@@ -9,6 +9,7 @@ import kotlin.system.exitProcess
 class VirtualPet(val pet: Pet) {
     var currentTime: Int = 6; private set
     var validations = Validation(pet)
+
     init {
         menu()
     }
@@ -23,11 +24,12 @@ class VirtualPet(val pet: Pet) {
         println("1 - Alimentar ${pet.name}")
         println("2 - Brincar com ${pet.name}")
         println("3 - Descansar com ${pet.name}")
-        println("4 - Verificar status de ${pet.name}")
+        println("4 - Levar ${pet.name} ao banheiro")
         println("5 - Dormir com ${pet.name} (encerrar o dia)")
-        println("6 - Abandonar ${pet.name} (sair do jogo)")
+        println("6 - Verificar status de ${pet.name}")
+        println("7 - Abandonar ${pet.name} (sair do jogo)")
         val choice = readln().toIntOrNull()
-        if (currentTime >= 22 && choice !in 4..6) {
+        if (currentTime >= 22 && choice !in 5..7) {
             println("A partir das 22h não é possível realizar mais nenhuma tarefa que não seja dormir!")
             pressEnterToContinue()
             return menu()
@@ -56,7 +58,9 @@ class VirtualPet(val pet: Pet) {
             }
 
             4 -> {
-                pet.checkStatus()
+                wait("FAZENDO NECESSIDADES", duration)
+                pet.natureCalls(duration)
+                increaseTime(duration)
                 menu()
             }
 
@@ -76,6 +80,12 @@ class VirtualPet(val pet: Pet) {
             }
 
             6 -> {
+                pet.checkStatus()
+                menu()
+            }
+
+
+            7 -> {
                 println("Você abandonou ${pet.name}. Adeus!")
                 exitProcess(0)
             }

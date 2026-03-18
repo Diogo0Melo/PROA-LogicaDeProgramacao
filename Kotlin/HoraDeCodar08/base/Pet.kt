@@ -26,12 +26,14 @@ abstract class Pet {
         private set(value) {
             field = if (value < 0) 0 else if (value > 100) 100 else value
         }
+    var natureCallsLevel: Int = 0; private set
 
     fun feed(food: Map<String, Int>, hours: Int) {
         println("Você alimentou $name com ${food.keys.first()}")
         reduceHunger(food)
         increaseTiredness()
         increaseHappiness()
+        increaseNatureCalls(hours)
         pressEnterToContinue()
         return
     }
@@ -42,6 +44,7 @@ abstract class Pet {
         increaseTiredness(hours)
         increaseHunger(hours)
         increaseAffinity(hours)
+        increaseNatureCalls(hours)
         pressEnterToContinue()
         return
     }
@@ -51,6 +54,7 @@ abstract class Pet {
         reduceTiredness(hours)
         reduceHappiness(hours)
         increaseHunger(hours)
+        increaseNatureCalls(hours)
         pressEnterToContinue()
         return
     }
@@ -61,6 +65,7 @@ abstract class Pet {
         println("Nome: $name")
         println("Idade: $age")
         println("Nível de Fome: $hungerLevel")
+        println("Nível de Necessidades: $natureCallsLevel")
         println("Nível de Felicidade: $happinessLevel")
         println("Nível de Afinidade: $affinityLevel")
         println("Nível de Cansaço: $tirednessLevel")
@@ -70,10 +75,17 @@ abstract class Pet {
     }
 
     fun haveBirthday() {
-        this.increaseAge()
+        increaseAge()
         println("Hoje é o aniversário de $name!")
         println("$name agora tem $age anos.")
         pressEnterToContinue()
+    }
+
+    fun natureCalls(hours: Int) {
+        println("Você levou $name ao banheiro")
+        resetNatureCalls()
+        pressEnterToContinue()
+        return
     }
 
     private fun increaseAge() = age++
@@ -145,6 +157,19 @@ abstract class Pet {
         val pointsChanged = hours * 5
         trainingLevel -= pointsChanged
         println("O treinamento de $name reduziu em $pointsChanged pontos")
+        return
+    }
+
+    private fun increaseNatureCalls(hours: Int) {
+        val pointsChanged = hours * 5
+        natureCallsLevel += pointsChanged
+        println("A vontade de ir ao banheiro de $name aumentou em $pointsChanged pontos")
+        return
+    }
+
+    private fun resetNatureCalls() {
+        natureCallsLevel = 0
+        println("$name fez suas necessidades e agora está confortável")
         return
     }
 
