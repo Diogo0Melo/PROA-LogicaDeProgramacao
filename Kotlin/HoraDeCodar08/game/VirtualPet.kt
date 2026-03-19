@@ -8,7 +8,7 @@ import kotlin.system.exitProcess
 
 class VirtualPet(val pet: Pet) {
     var currentTime: Int = 6; private set
-    var validations = Validation(pet)
+    private val validations = Validation(pet)
 
     init {
         menu()
@@ -25,75 +25,35 @@ class VirtualPet(val pet: Pet) {
         println("2 - Brincar com ${pet.name}")
         println("3 - Descansar com ${pet.name}")
         println("4 - Levar ${pet.name} ao banheiro")
-        println("5 - Dormir com ${pet.name} (encerrar o dia)")
-        println("6 - Verificar status de ${pet.name}")
-        println("7 - Abandonar ${pet.name} (sair do jogo)")
+        println("5 - Dar banho em ${pet.name}")
+        println("6 - Dormir com ${pet.name} (encerrar o dia)")
+        println("7 - Verificar status de ${pet.name}")
+        println("8 - Abandonar ${pet.name} (sair do jogo)")
         val choice = readln().toIntOrNull()
-        if (currentTime >= 22 && choice !in 5..7) {
+        if (currentTime >= 22 && choice !in 6..8) {
             println("A partir das 22h não é possível realizar mais nenhuma tarefa que não seja dormir!")
             pressEnterToContinue()
             return menu()
         }
         val duration = if (choice != null && choice in 2..3) this.requestDuration() else 1
         return when (choice) {
-            1 -> {
-                wait("ALIMENTANDO", duration)
-                pet.feed(mapOf("BiscoitoScooby" to 10), duration)
-                increaseTime(duration)
-                menu()
-            }
+            1 -> feed(duration)
 
-            2 -> {
-                wait("BRINCANDO", duration)
-                pet.play(duration)
-                increaseTime(duration)
-                menu()
-            }
+            2 -> play(duration)
 
-            3 -> {
-                wait("DESCANSANDO", duration)
-                pet.sleep(duration)
-                increaseTime(duration)
-                menu()
-            }
+            3 -> rest(duration)
 
-            4 -> {
-                wait("FAZENDO NECESSIDADES", duration)
-                pet.natureCalls(duration)
-                increaseTime(duration)
-                menu()
-            }
+            4 -> goToBathroom(duration)
 
-            5 -> {
-                if (currentTime < 22) {
-                    println("Ainda há tempo para aproveitar.")
-                    println("Volte à interagir com seu pet!!!")
-                    pressEnterToContinue()
-                    menu()
-                } else {
-                    println("Você e ${pet.name} foram dormir até o amanhecer do novo dia!")
-                    wait("DORMINDO", 8)
-                    finishDay()
-                    menu()
-                }
+            5 -> giveBath(duration)
 
-            }
+            6 -> sleep(8)
 
-            6 -> {
-                pet.checkStatus()
-                menu()
-            }
+            7 -> checkStatus()
 
+            8 -> exit()
 
-            7 -> {
-                println("Você abandonou ${pet.name}. Adeus!")
-                exitProcess(0)
-            }
-
-            else -> {
-                println("Opção inválida, escolha uma opção válida.")
-                menu()
-            }
+            else -> error()
         }
     }
 
@@ -134,5 +94,69 @@ class VirtualPet(val pet: Pet) {
     private fun setTime(hours: Int = 6) {
         currentTime = hours
         return
+    }
+
+    private fun feed(duration: Int) {
+        wait("ALIMENTANDO", duration)
+        pet.feed(mapOf("BiscoitoScooby" to 10), duration)
+        increaseTime(duration)
+        menu()
+    }
+
+    private fun play(duration: Int) {
+        wait("BRINCANDO", duration)
+        pet.play(duration)
+        increaseTime(duration)
+        menu()
+    }
+
+    private fun rest(duration: Int) {
+        wait("DESCANSANDO", duration)
+        pet.sleep(duration)
+        increaseTime(duration)
+        menu()
+    }
+
+    private fun goToBathroom(duration: Int) {
+        wait("FAZENDO NECESSIDADES", duration)
+        pet.natureCalls()
+        increaseTime(duration)
+        menu()
+    }
+
+    private fun giveBath(duration: Int) {
+        wait("DANDO BANHO", duration)
+        pet.giveBath(duration)
+        increaseTime(duration)
+        menu()
+    }
+
+    private fun sleep(duration: Int) {
+        if (currentTime < 22) {
+            println("Ainda há tempo para aproveitar.")
+            println("Volte à interagir com seu pet!!!")
+            pressEnterToContinue()
+            menu()
+        } else {
+            println("Você e ${pet.name} foram dormir até o amanhecer do novo dia!")
+            wait("DORMINDO", duration)
+            finishDay()
+            menu()
+        }
+    }
+
+    private fun checkStatus() {
+        pet.checkStatus()
+        menu()
+    }
+
+    private fun exit() {
+        println("Você abandonou ${pet.name}. Adeus!")
+        exitProcess(0)
+    }
+
+    private fun error() {
+        println("Opção inválida, escolha uma opção válida.")
+        menu()
     }
 }

@@ -15,7 +15,10 @@ class Validation(private val pet: Pet) {
                 "whatHappened" to "gameOver",
                 "reason" to "Seu ${pet.species} ${pet.name} explodiu porquê não foi ao banheiro!"
             )
-        } else mapOf()
+        } else if(pet.dirtinessLevel >= 100){
+            mapOf("whatHappened" to "gameOver", "reason" to "Seu ${pet.species} ${pet.name} se camuflou com a sujeira e agora você não consegue encontra-lo!")
+        }
+        else mapOf()
     }
 
     fun validateWin(): Map<String, String> {

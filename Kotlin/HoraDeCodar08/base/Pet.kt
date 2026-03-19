@@ -27,13 +27,15 @@ abstract class Pet {
             field = if (value < 0) 0 else if (value > 100) 100 else value
         }
     var natureCallsLevel: Int = 0; private set
+    var dirtinessLevel:Int = 0; private set
 
     fun feed(food: Map<String, Int>, hours: Int) {
         println("Você alimentou $name com ${food.keys.first()}")
         reduceHunger(food)
-        increaseTiredness()
-        increaseHappiness()
+        increaseTiredness(hours)
+        increaseHappiness(hours)
         increaseNatureCalls(hours)
+        increaseDirtiness(hours)
         pressEnterToContinue()
         return
     }
@@ -45,6 +47,7 @@ abstract class Pet {
         increaseHunger(hours)
         increaseAffinity(hours)
         increaseNatureCalls(hours)
+        increaseDirtiness(hours)
         pressEnterToContinue()
         return
     }
@@ -64,12 +67,13 @@ abstract class Pet {
         println("Espécie: $species")
         println("Nome: $name")
         println("Idade: $age")
-        println("Nível de Fome: $hungerLevel")
-        println("Nível de Necessidades: $natureCallsLevel")
-        println("Nível de Felicidade: $happinessLevel")
-        println("Nível de Afinidade: $affinityLevel")
-        println("Nível de Cansaço: $tirednessLevel")
-        println("Nível de Treinamento: $trainingLevel")
+        println("Nível de Fome: $hungerLevel    ------------->   Menor = Melhor")
+        println("Nível de Necessidades: $natureCallsLevel   ------------->   Menor = Melhor")
+        println("Nível de Felicidade: $happinessLevel   ------------->   Maior = Melhor")
+        println("Nível de Afinidade: $affinityLevel   ------------->   Maior = Melhor")
+        println("Nível de Cansaço: $tirednessLevel   ---------->   Menor = Melhor")
+        println("Nível de Limpeza: $dirtinessLevel   ------------->   Menor = Melhor")
+        println("Nível de Treinamento: $trainingLevel   ------------->   Maior = Melhor")
         pressEnterToContinue()
         return
     }
@@ -81,9 +85,18 @@ abstract class Pet {
         pressEnterToContinue()
     }
 
-    fun natureCalls(hours: Int) {
+    fun natureCalls() {
         println("Você levou $name ao banheiro")
         resetNatureCalls()
+        pressEnterToContinue()
+        return
+    }
+
+    fun giveBath(hours: Int){
+        println("Você deu banho em $name")
+        resetDirtiness()
+        reduceHappiness()
+        reduceAffinity(hours)
         pressEnterToContinue()
         return
     }
@@ -170,6 +183,19 @@ abstract class Pet {
     private fun resetNatureCalls() {
         natureCallsLevel = 0
         println("$name fez suas necessidades e agora está confortável")
+        return
+    }
+
+    private fun increaseDirtiness(hours: Int){
+        val pointsChanged = hours * 5
+        dirtinessLevel += pointsChanged
+        println("$name ficou $pointsChanged pontos mais sujo")
+        return
+    }
+
+    private fun resetDirtiness(){
+        dirtinessLevel = 0
+        println("$name está limpo")
         return
     }
 

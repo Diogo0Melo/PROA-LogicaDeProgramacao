@@ -12,20 +12,20 @@ fun choosePet() {
     println("Pato - Peixe Dourado - Ganso - Hamster - Cavalo - Porco - Furão")
     val choice = readln().lowercase()
     return when (choice.lowercase()) {
-        "cachorro" -> setPetName("cachorro")
-        "gato" -> setPetName("gato")
-        "coelho" -> setPetName("coelho")
-        "calopsita" -> setPetName("calopsita")
-        "papagaio" -> setPetName("papagaio")
-        "galinha" -> setPetName("galinha")
-        "doninha" -> setPetName("doninha")
-        "pato" -> setPetName("pato")
-        "peixe dourado" -> setPetName("peixe dourado")
-        "ganso" -> setPetName("ganso")
-        "hamster" -> setPetName("hamster")
-        "cavalo" -> setPetName("cavalo")
-        "porco" -> setPetName("porco")
-        "furão" -> setPetName("furão")
+        "cachorro" -> choosePetName("cachorro")
+        "gato" -> choosePetName("gato")
+        "coelho" -> choosePetName("coelho")
+        "calopsita" -> choosePetName("calopsita")
+        "papagaio" -> choosePetName("papagaio")
+        "galinha" -> choosePetName("galinha")
+        "doninha" -> choosePetName("doninha")
+        "pato" -> choosePetName("pato")
+        "peixe dourado" -> choosePetName("peixe dourado")
+        "ganso" -> choosePetName("ganso")
+        "hamster" -> choosePetName("hamster")
+        "cavalo" -> choosePetName("cavalo")
+        "porco" -> choosePetName("porco")
+        "furão" -> choosePetName("furão")
         else -> {
             println("Opção inválida, escolha um pet válido.")
             choosePet()
@@ -33,7 +33,7 @@ fun choosePet() {
     }
 }
 
-fun setPetName(species: String) {
+fun choosePetName(species: String) {
     println("Escolha um nome para seu $species:")
     val name = readln().trim().ifEmpty { readln() }
     return when (species) {
@@ -41,7 +41,7 @@ fun setPetName(species: String) {
         "gato" -> runVirtualPet(Cat(name))
         "coelho" -> runVirtualPet(Rabbit(name))
         "calopsita" -> runVirtualPet(Cockatiel(name))
-        "papagaio" -> runVirtualPet(Parrot(name)) // Assuming Papagaio is also a Calopsita for now
+        "papagaio" -> runVirtualPet(Parrot(name))
         "galinha" -> runVirtualPet(Chicken(name))
         "Doninha" -> runVirtualPet(Weasel(name))
         "pato" -> runVirtualPet(Duck(name))
