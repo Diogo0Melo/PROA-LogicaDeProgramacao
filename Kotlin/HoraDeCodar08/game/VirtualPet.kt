@@ -19,39 +19,34 @@ class VirtualPet(val pet: Pet) {
         val win = validations.validateWin()
         if (gameOver.isNotEmpty()) finishGame(gameOver)
         else if (win.isNotEmpty()) finishGame(win)
-        println("Hora atual: ${currentTime.toString().padStart(2, '0')}:00")
-        println("O que você gostaria de fazer com seu pet?")
-        println("1 - Alimentar ${pet.name}")
-        println("2 - Brincar com ${pet.name}")
-        println("3 - Descansar com ${pet.name}")
-        println("4 - Levar ${pet.name} ao banheiro")
-        println("5 - Dar banho em ${pet.name}")
-        println("6 - Dormir com ${pet.name} (encerrar o dia)")
-        println("7 - Verificar status de ${pet.name}")
-        println("8 - Abandonar ${pet.name} (sair do jogo)")
+        
+        showInteractionMenu()
+
         val choice = readln().toIntOrNull()
-        if (currentTime >= 22 && choice !in 6..8) {
+        if (currentTime >= 22 && choice !in 7..9) {
             println("A partir das 22h não é possível realizar mais nenhuma tarefa que não seja dormir!")
             pressEnterToContinue()
             return menu()
         }
-        val duration = if (choice != null && choice in 2..3) this.requestDuration() else 1
+        val duration = if (choice != null && choice in 2..4) this.requestDuration() else 1
         return when (choice) {
             1 -> feed(duration)
 
             2 -> play(duration)
 
-            3 -> rest(duration)
+            3 -> train(duration)
 
-            4 -> goToBathroom(duration)
+            4 -> rest(duration)
 
-            5 -> giveBath(duration)
+            5 -> goToBathroom(duration)
 
-            6 -> sleep(8)
+            6 -> giveBath(duration)
 
-            7 -> checkStatus()
+            7 -> sleep(8)
 
-            8 -> exit()
+            8 -> checkStatus()
+
+            9 -> exit()
 
             else -> error()
         }
@@ -74,7 +69,7 @@ class VirtualPet(val pet: Pet) {
 
     private fun finishDay(hours: Int = 8) {
         pet.sleep(hours)
-        pet.haveBirthday()
+        pet.haveBirthday(hours)
         setTime()
         return
     }
@@ -106,6 +101,13 @@ class VirtualPet(val pet: Pet) {
     private fun play(duration: Int) {
         wait("BRINCANDO", duration)
         pet.play(duration)
+        increaseTime(duration)
+        menu()
+    }
+
+    private fun train(duration: Int) {
+        wait("TREINANDO", duration)
+        pet.train(duration)
         increaseTime(duration)
         menu()
     }
@@ -158,5 +160,27 @@ class VirtualPet(val pet: Pet) {
     private fun error() {
         println("Opção inválida, escolha uma opção válida.")
         menu()
+    }
+
+    private fun showInteractionMenu() {
+
+        val interactions = arrayOf(
+            "Alimentar ${pet.name}",
+            "Brincar com ${pet.name}",
+            "Treinar ${pet.name}",
+            "Descansar com ${pet.name}",
+            "Levar ${pet.name} ao banheiro",
+            "Dar banho em ${pet.name}",
+            "Dormir com ${pet.name}",
+            "Verificar status de ${pet.name}",
+            "Abandonar ${pet.name}"
+        )
+
+        println("Hora atual: ${currentTime.toString().padStart(2, '0')}:00")
+        println("O que você gostaria de fazer com seu ${pet.species}?")
+
+        interactions.forEachIndexed { index, interaction ->
+            println("${index + 1} - $interaction")
+        }
     }
 }

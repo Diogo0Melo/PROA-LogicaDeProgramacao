@@ -51,12 +51,12 @@ fun choosePetName(species: String) {
         "cavalo" -> runVirtualPet(Horse(name))
         "porco" -> runVirtualPet(Pig(name))
         "Furão" -> runVirtualPet(Ferret(name))
-        else -> throw IllegalArgumentException("Espécie inválida.") // Nunca deve acontecer, pois a função escolherPet já valida as opções
+        else -> throw IllegalArgumentException("Espécie inválida.") // Nunca deve acontecer, pois a função choosePet já valida as opções
     }
 }
 
 fun runVirtualPet(pet: Pet) {
-    wait("ADOTANDO", 5)
+    wait("ADOTANDO", 3)
     println("Parabéns! Você adotou um ${pet.species} chamado ${pet.name}!")
     pressEnterToContinue()
     VirtualPet(pet)

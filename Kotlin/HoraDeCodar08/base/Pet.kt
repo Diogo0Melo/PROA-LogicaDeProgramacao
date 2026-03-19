@@ -78,8 +78,9 @@ abstract class Pet {
         return
     }
 
-    fun haveBirthday() {
+    fun haveBirthday(hours: Int) {
         increaseAge()
+        reduceTraining(hours)
         println("Hoje é o aniversário de $name!")
         println("$name agora tem $age anos.")
         pressEnterToContinue()
@@ -99,6 +100,18 @@ abstract class Pet {
         reduceAffinity(hours)
         pressEnterToContinue()
         return
+    }
+
+    fun train(hours: Int){
+        println("Você treinou $name")
+        increaseTraining(hours)
+        increaseNatureCalls(hours)
+        increaseDirtiness(hours)
+        increaseTiredness(hours)
+        reduceHappiness(hours)
+        pressEnterToContinue()
+        return
+
     }
 
     private fun increaseAge() = age++
@@ -167,7 +180,7 @@ abstract class Pet {
     }
 
     private fun reduceTraining(hours: Int) {
-        val pointsChanged = hours * 5
+        val pointsChanged = hours * 3
         trainingLevel -= pointsChanged
         println("O treinamento de $name reduziu em $pointsChanged pontos")
         return
