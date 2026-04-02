@@ -21,11 +21,13 @@ val POSTOS_DISPONIVEIS = listOf(
     Posto("Wayne Oil", 0.0, 0.0, ""),
     Posto("Stark Petrol", 0.0, 0.0, "")
 )
+val FORMATAR_PRECO: (Double) -> Double = { "%.2f".format(it).replace(",", ".").toDouble() }
 
 class Quarto(
     val numero: Int,
     var ocupado: Boolean,
     var diasReservado: Int,
+    var classe: String? = null,
     var hospedes: MutableList<Hospede>? = null
 ) {
     fun estaOcupado(): String {
@@ -43,14 +45,14 @@ class Hospede(val nome: String, val idade: Int, var quarto: Quarto?) {
     }
 }
 
-class EspacoEvento(
+data class EspacoEvento(
     val nomeLocal: String,
     val capacidade: Int,
     val capacidadeAdicional: Int,
     var listaReservas: MutableList<ReservaEvento>? = null
 )
 
-class ReservaEvento(
+data class ReservaEvento(
     val reservante: String,
     val qtdPessoas: Int,
     val qtdGarcons: Int,
@@ -64,14 +66,14 @@ class ReservaEvento(
     val espacoEvento: EspacoEvento
 )
 
-class Posto(val nome: String, var precoAlcool: Double, var precoGasolina: Double, var maisBarato: String)
+data class Posto(val nome: String, var precoAlcool: Double, var precoGasolina: Double, var maisBarato: String)
 
 var nomeFuncionario: String = ""
 
 fun inicio() {
     if (nomeFuncionario == "") logar()
     println("Bem-vindo ao Tasokare Hotel, $nomeFuncionario. É um imenso prazer ter você por aqui!")
-    println("1. Menu de Hóspedes - 2. Reservar Quarto - 3. Reservar Espaço para Eventos - 4. Abastecimento de Automóveis - 5. Manutenção de Ar Condicionados - 6. Sair do Hotel")
+    println("1. Menu de Hóspedes - 2. Reservar Quarto - 3. Reservar Espaço para Eventos - 4. Abastecimento de Automóveis - 5. Manutenção de Ar Condicionados - 6. Relatórios Operacionais - 7. Sair do Hotel")
     println("Escolha uma opção:")
     // A varival escolha armazena a opção escolhida pelo usuário.
     // uma variavel local é utilizada apenas dentro da função inicio().
@@ -82,7 +84,8 @@ fun inicio() {
         3 -> reservarEspacoEventos()
         4 -> abastecimentoDeAutomoveis()
         5 -> manutencaoArCondicionados()
-        6 -> sairDoHotel()
+        6 -> relatoriosOperacionais()
+        7 -> sairDoHotel()
         else -> erroMenuPrincipal()
     }
 }
@@ -92,11 +95,18 @@ fun logar() {
     println("Digite o nome de usuário: ")
     val nomeUsuario = readln()
     if (nomeUsuario == "") return logar()
-    println("Digite a senha: ")
-    val senha = readln().toIntOrNull()
-    if (senha != 2678) {
-        println("Senha incorreta. Por favor, tente novamente.")
-        return logar()
+    var tentativas = 3
+    while (true) {
+        if (tentativas == 0) {
+            println("Excesso de tentativas, sistema bloqueado.")
+            exitProcess(0)
+        }
+        println("Digite a senha: ")
+        val senha = readln().toIntOrNull()
+        if (senha != 2678) {
+            println("Senha incorreta. Por favor, tente novamente.")
+            println("Você tem ${--tentativas} tentativas restantes!")
+        } else break
     }
     nomeFuncionario = nomeUsuario
 }
@@ -218,8 +228,11 @@ fun reservarQuarto() {
     println("RESERVA DE QUARTO\n")
     val valorDiaria = valorDiaria() ?: return inicio()
     val qtdDiarias = quantidadeDiarias() ?: return inicio()
+    val classeQuarto = solicitarClasseDoQuarto() ?: return inicio()
+    val subTotal = calcularSubTotal(valorDiaria, qtdDiarias, classeQuarto)
+    val total = subTotal * (subTotal * 0.1) // 10% da taxa de serviço
 
-    println("O valor de $qtdDiarias dias de hospedagem é: R$${valorDiaria * qtdDiarias}")
+    println("O valor de $qtdDiarias dias de hospedagem é: R$$subTotal")
     enter()
 
     val listaHospedes = selecionarHospedes().ifEmpty { return inicio() }
@@ -240,7 +253,8 @@ fun valorDiaria(): Double? {
         println("Valor inválido. Por favor, digite um valor positivo.")
         return null
     }
-    return valor
+    val valorFormatado = FORMATAR_PRECO(valor)
+    return valorFormatado
 }
 
 fun quantidadeDiarias(): Int? {
@@ -251,6 +265,31 @@ fun quantidadeDiarias(): Int? {
         return null
     }
     return qtd
+}
+
+fun solicitarClasseDoQuarto(): String? {
+    println("Digite a classe do quarto (standard, executive ou luxo): ")
+    val classe = readln()
+    if (classe.uppercase() !in listOf("STANDARD", "EXECUTIVE", "LUXO")) {
+        println("Classe inválida. Por favor, digite uma classe válida.")
+        return null
+    }
+    return classe.lowercase()
+}
+
+fun calcularSubTotal(
+    valorDiaria: Double,
+    qtdDiarias: Int,
+    classeQuarto: String
+): Double {
+
+    val subTotal = (valorDiaria * qtdDiarias)
+    return when (classeQuarto) {
+        "standard" -> FORMATAR_PRECO(subTotal)
+        "executive" -> FORMATAR_PRECO(subTotal * 1.35)
+        "luxo" -> FORMATAR_PRECO(subTotal * 1.65)
+        else -> throw IllegalArgumentException("NUNCA DEVERIA CHEGAR AQUI")
+    }
 }
 
 fun selecionarHospedes(): MutableList<Hospede> {
@@ -290,6 +329,8 @@ fun selecionarQuarto(): Quarto {
     val quarto = QUARTOS[numeroQuarto - 1]
     if (quarto.ocupado) {
         println("O quarto $numeroQuarto já está ocupado. Por favor, selecione outro quarto.")
+        mostrarQuartos()
+        enter()
         return selecionarQuarto()
     }
     println("Quarto $numeroQuarto selecionado com sucesso!")
@@ -633,7 +674,7 @@ fun abastecimentoDeAutomoveis() {
     return inicio()
 }
 
-fun lerPrecoAlcool(posto: Posto){
+fun lerPrecoAlcool(posto: Posto) {
     println("Qual o valor do álcool no posto ${posto.nome}?")
     posto.precoAlcool = readln().toDoubleOrNull() ?: 0.0
     if (posto.precoAlcool <= 0.0) {
@@ -642,7 +683,7 @@ fun lerPrecoAlcool(posto: Posto){
     }
 }
 
-fun lerPrecoGasolina(posto: Posto){
+fun lerPrecoGasolina(posto: Posto) {
     println("Qual o valor da gasolina no posto ${posto.nome}?")
     posto.precoGasolina = readln().toDoubleOrNull() ?: 0.0
     if (posto.precoAlcool <= 0.0) {
@@ -730,6 +771,8 @@ fun manutencaoArCondicionados() {
     enter()
     return inicio()
 }
+
+fun relatoriosOperacionais() {}
 
 fun erroMenuPrincipal() {
     println("Por favor, informe um número entre 1 e 6.")
