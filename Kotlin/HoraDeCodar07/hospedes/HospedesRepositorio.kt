@@ -5,8 +5,7 @@ object HospedesRepositorio {
 
     fun salvar(hospede: Hospede): Boolean {
         if (listaHospedes.size >= 15) return false
-        listaHospedes.add(hospede)
-        return true
+        return listaHospedes.add(hospede)
     }
 
     fun pesquisarPorNomeExato(nome: String): Hospede? {
@@ -28,5 +27,9 @@ object HospedesRepositorio {
         val nomeAntigo = hospede.nome
         hospede.nome = novoNome
         return mapOf("nomeAntigo" to nomeAntigo, "novoNome" to novoNome)
+    }
+
+    fun deletarHospede(hospede: Hospede): Boolean {
+        return listaHospedes.remove(hospede)
     }
 }

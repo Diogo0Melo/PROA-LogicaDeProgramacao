@@ -2,6 +2,7 @@ package HoraDeCodar07.menus
 
 import HoraDeCodar07.hospedes.*
 import HoraDeCodar07.utils.erroMenuHospedes
+import HoraDeCodar07.utils.voltarAoMenuPrincipal
 
 fun menuHospedes() {
     println("MENU DE HÓSPEDES\n")
@@ -15,8 +16,8 @@ fun menuHospedes() {
         3 -> pesquisarHospedesPrefixo()
         4 -> listarHospedes()
         5 -> atualizarCadastroHospede()
-        //6 -> excluirHospede()
-        //7 -> voltarAoMenuPrincipal()
+        6 -> excluirHospede()
+        7 -> voltarAoMenuPrincipal()
         else -> erroMenuHospedes()
     }
 }

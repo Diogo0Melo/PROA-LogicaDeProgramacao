@@ -15,7 +15,7 @@ fun cadastrarHospedes() {
     }
     val salvoSucesso = HospedesRepositorio.salvar(Hospede(nomeHospede))
     if(salvoSucesso) return cadastrarHospedes()
-    println("Limite máximo de 15 hóspedes atingido.")
+    println("Limite máximo de 15 hóspedes atingido. Não é possível cadastrar mais nenhum hóspede.")
     pausarFluxo()
     return menuHospedes()
 }
