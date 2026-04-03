@@ -20,4 +20,13 @@ object HospedesRepositorio {
         if (hospedes.isNotEmpty()) return hospedes
         return null
     }
+
+    fun listarHospedes(): List<Hospede>? =
+        listaHospedes.map { it }.sortedBy { it.nome.uppercase() }.ifEmpty { return null }
+
+    fun atualizarNomeHospede(hospede: Hospede, novoNome: String): Map<String, String>{
+        val nomeAntigo = hospede.nome
+        hospede.nome = novoNome
+        return mapOf("nomeAntigo" to nomeAntigo, "novoNome" to novoNome)
+    }
 }

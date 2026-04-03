@@ -1,8 +1,6 @@
 package HoraDeCodar07.menus
 
-import HoraDeCodar07.hospedes.cadastrarHospedes
-import HoraDeCodar07.hospedes.pesquisarHospedeNomeExato
-import HoraDeCodar07.hospedes.pesquisarHospedesPrefixo
+import HoraDeCodar07.hospedes.*
 import HoraDeCodar07.utils.erroMenuHospedes
 
 fun menuHospedes() {
@@ -15,8 +13,8 @@ fun menuHospedes() {
         1 -> cadastrarHospedes()
         2 -> pesquisarHospedeNomeExato()
         3 -> pesquisarHospedesPrefixo()
-        //4 -> listarHospedesCadastrados()
-        //5 -> atualizarCadastroHospede()
+        4 -> listarHospedes()
+        5 -> atualizarCadastroHospede()
         //6 -> excluirHospede()
         //7 -> voltarAoMenuPrincipal()
         else -> erroMenuHospedes()
