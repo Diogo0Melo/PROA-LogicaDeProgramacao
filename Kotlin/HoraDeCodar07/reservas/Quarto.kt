@@ -9,7 +9,8 @@ data class Quarto(
     var classe: String? = null,
     var hospedes: MutableList<Hospede>? = null
 ) {
-    fun estaOcupado(): String {
-        return if (ocupado) "Ocupado" else "Livre"
-    }
+    fun estaOcupado(): String = if (ocupado) "Ocupado" else "Livre"
+
+    fun alterarOcupacao() = run { ocupado = !ocupado }
+
 }

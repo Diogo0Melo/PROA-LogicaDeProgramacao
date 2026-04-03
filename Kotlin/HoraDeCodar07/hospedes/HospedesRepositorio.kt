@@ -1,5 +1,7 @@
 package HoraDeCodar07.hospedes
 
+import HoraDeCodar07.reservas.Quarto
+
 object HospedesRepositorio {
     val listaHospedes = mutableListOf<Hospede>()
 
@@ -23,7 +25,7 @@ object HospedesRepositorio {
     fun listarHospedes(): List<Hospede>? =
         listaHospedes.map { it }.sortedBy { it.nome.uppercase() }.ifEmpty { return null }
 
-    fun atualizarNomeHospede(hospede: Hospede, novoNome: String): Map<String, String>{
+    fun atualizarNomeHospede(hospede: Hospede, novoNome: String): Map<String, String> {
         val nomeAntigo = hospede.nome
         hospede.nome = novoNome
         return mapOf("nomeAntigo" to nomeAntigo, "novoNome" to novoNome)
@@ -32,4 +34,12 @@ object HospedesRepositorio {
     fun deletarHospede(hospede: Hospede): Boolean {
         return listaHospedes.remove(hospede)
     }
+
+    fun adicionarQuarto(hospede: Hospede, quarto: Quarto): Boolean {
+        hospede.quarto = quarto
+        return true
+    }
+
+    fun listarHospedesSemReserva(): List<Hospede>? = listaHospedes.filter { it.quarto == null }.ifEmpty { null }
+
 }

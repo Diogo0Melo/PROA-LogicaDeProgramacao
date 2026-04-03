@@ -1,6 +1,7 @@
 package HoraDeCodar07.menus
 
 import HoraDeCodar07.auth.loginFuncionario
+import HoraDeCodar07.reservas.reservarQuarto
 import HoraDeCodar07.utils.erroMenuPrincipal
 
 const val NOME_HOTEL = "Tasokare Hotel"
@@ -14,7 +15,7 @@ fun inicio() {
     val escolha = readln().toIntOrNull()
     return when (escolha) {
         1 -> menuHospedes()
-        //2 -> reservarQuarto()
+        2 -> reservarQuarto()
         //3 -> reservarEspacoEventos()
         //4 -> abastecimentoDeAutomoveis()
         //6 -> relatoriosOperacionais()

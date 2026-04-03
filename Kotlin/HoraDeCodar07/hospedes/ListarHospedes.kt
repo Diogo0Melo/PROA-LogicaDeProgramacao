@@ -14,3 +14,14 @@ fun listarHospedes() {
     pausarFluxo()
     return menuHospedes()
 }
+
+fun listarHospedesSemReserva(){
+    println("LISTA DE HÓSPEDES SEM RESERVA\n")
+    val listaHospedes = HospedesRepositorio.listarHospedesSemReserva()
+    listaHospedes?.forEachIndexed { indice, hospede ->
+        println("[${indice + 1}] Nome: ${hospede.nome}, Quarto: ${hospede.quarto?.numero ?: "Não hospedado"}, Data/Hora do cadastro: ${hospede.dataCadastro}")
+    } ?: println("Nenhum hóspede cadastrado.")
+
+    pausarFluxo()
+    return
+}
