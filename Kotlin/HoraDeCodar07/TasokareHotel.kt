@@ -35,7 +35,7 @@ class Quarto(
     }
 }
 
-class Hospede(val nome: String, val idade: Int, var quarto: Quarto?) {
+class Hospede(var nome: String, var idade: Int, var quarto: Quarto?) {
     init {
         println("$nome cadastrado(a) com sucesso. ${tipoDeDesconto()}")
     }
@@ -113,15 +113,16 @@ fun logar() {
 
 fun menuHospedes() {
     println("MENU DE HÓSPEDES\n")
-    println("1. Cadastrar Hóspedes - 2. Pesquisar Hóspedes - 3. Listar Hóspedes Cadastrados - 4. Deletar Registro do Hóspede - 5. Voltar ao Menu Principal")
+    println("1. Cadastrar Hóspedes - 2. Pesquisar Hóspedes - 3. Listar Hóspedes Cadastrados - 4. Atualizar Cadastro do Hóspede - 5. Deletar Registro do Hóspede - 6. Voltar ao Menu Principal")
     println("Escolha uma opção:")
     val escolha = readln().toIntOrNull()
     return when (escolha) {
         1 -> cadastrarHospedes()
         2 -> pesquisarHospedes()
         3 -> listarHospedesCadastrados()
-        4 -> excluirHospede()
-        5 -> voltarAoMenuPrincipal()
+        4 -> atualizarCadastroHospede()
+        5 -> excluirHospede()
+        6 -> voltarAoMenuPrincipal()
         else -> erroMenuHospedes()
     }
 }
@@ -130,9 +131,9 @@ fun cadastrarHospedes() {
     val listaHospedesCadastrados = mutableListOf<Hospede>()
     while (true) {
         println("CADASTRO DE HÓSPEDES\n")
-        println("Digite 'PARE' para finalizar o cadastro.")
+        println("Digite \"PARE\" para finalizar o cadastro.")
         val nomeHospede = pedirNome()
-        if (nomeHospede == "PARE") {
+        if (nomeHospede.uppercase() == "PARE") {
             println("Cadastro finalizado. Retornando ao menu principal.")
             if (listaHospedesCadastrados.isNotEmpty()) {
                 var qtdGratuidades = 0
@@ -176,16 +177,19 @@ fun pedirIdade(): Int {
 
 fun pesquisarHospedes() {
     println("PESQUISA DE HÓSPEDES\n")
-    println("Digite o nome do hóspede para pesquisar ou 'VOLTAR' para retornar ao menu de hóspedes: ")
+    println("Digite o nome do hóspede para pesquisar ou \"VOLTAR\" para retornar ao menu de hóspedes: ")
     val nomePesquisa = readln()
     if (nomePesquisa.uppercase() == "VOLTAR") {
         println("Retornando ao menu de hóspedes.")
         enter()
         return menuHospedes()
     }
-    val hospedeEncontrado = HOSPEDES_CADASTRADOS.find { it.nome.equals(nomePesquisa, ignoreCase = true) }
-    if (hospedeEncontrado != null) {
-        println("Hóspede encontrado: ${hospedeEncontrado.nome}, Idade: ${hospedeEncontrado.idade}, Quarto: ${hospedeEncontrado.quarto?.numero ?: "Não hospedado"}")
+    val hospedeEncontrado = HOSPEDES_CADASTRADOS.filter { it.nome.contains(nomePesquisa, ignoreCase = true) }
+    if (hospedeEncontrado.isNotEmpty()) {
+        println("Resultados:")
+        hospedeEncontrado.forEach { hospede ->
+            println("Hóspede encontrado: ${hospede.nome}, Idade: ${hospede.idade}, Quarto: ${hospede.quarto?.numero ?: "Não hospedado"}")
+        }
     } else {
         println("Hóspede não encontrado. Por favor, tente novamente.")
     }
@@ -198,8 +202,47 @@ fun listarHospedesCadastrados() {
     if (HOSPEDES_CADASTRADOS.isEmpty()) {
         println("Nenhum hóspede cadastrado.")
     } else {
-        HOSPEDES_CADASTRADOS.forEach { println("Nome: ${it.nome}, Idade: ${it.idade}, Quarto: ${it.quarto?.numero ?: "Não hospedado"}") }
+        val hospedesOrdenados = HOSPEDES_CADASTRADOS.map { it }.sortedBy { it.nome.uppercase() }
+        hospedesOrdenados.forEach { println("Nome: ${it.nome}, Idade: ${it.idade}, Quarto: ${it.quarto?.numero ?: "Não hospedado"}") }
     }
+    enter()
+    return menuHospedes()
+}
+
+fun atualizarCadastroHospede(){
+    println("ATUALIZAR CADASTRO DO HÓSPEDE\n")
+    println("Digite o nome completo do hóspede: ")
+    val nomeHospede = readln().ifBlank { return menuHospedes() }
+    val hospedeEncontrado = HOSPEDES_CADASTRADOS.find { it.nome.equals(nomeHospede, ignoreCase = true) }
+    if (hospedeEncontrado != null) {
+        println("Hóspede ${hospedeEncontrado.nome} encontrado!")
+        while (true){
+            println("O que deseja atualizar ?")
+            println("1. Nome - 2. Idade - 3. Sair")
+            val opcao = readln().toIntOrNull()
+            when (opcao){
+                1 -> {
+                    val novoNome = pedirNome()
+                    hospedeEncontrado.nome = novoNome
+                    println("O nome do hóspede $nomeHospede foi alterado para ${hospedeEncontrado.nome}")
+                    enter()
+                }
+                2 -> {
+                    val idadeAntiga = hospedeEncontrado.idade
+                    val novaIdade = pedirIdade()
+                    hospedeEncontrado.idade = novaIdade
+                    println("A idade do hóspede ${hospedeEncontrado.nome} foi alterada de $idadeAntiga para ${hospedeEncontrado.idade}")
+                    enter()
+                }
+                3 -> return menuHospedes()
+                else -> {
+                    println("Opção inválida")
+                    enter()
+                }
+            }
+        }
+    }
+    println("Hóspede $nomeHospede não encontrado!")
     enter()
     return menuHospedes()
 }
@@ -230,15 +273,22 @@ fun reservarQuarto() {
     val qtdDiarias = quantidadeDiarias() ?: return inicio()
     val classeQuarto = solicitarClasseDoQuarto() ?: return inicio()
     val subTotal = calcularSubTotal(valorDiaria, qtdDiarias, classeQuarto)
-    val total = subTotal * (subTotal * 0.1) // 10% da taxa de serviço
-
-    println("O valor de $qtdDiarias dias de hospedagem é: R$$subTotal")
-    enter()
+    val taxaServico = FORMATAR_PRECO(subTotal * 0.1) // 10% de taxa de serviço
+    val total = subTotal + taxaServico
 
     val listaHospedes = selecionarHospedes().ifEmpty { return inicio() }
     val quartoSelecionado = selecionarQuarto()
 
-    confirmarReserva(valorDiaria, qtdDiarias, listaHospedes, quartoSelecionado)
+    confirmarReserva(
+        valorDiaria,
+        qtdDiarias,
+        listaHospedes,
+        quartoSelecionado,
+        classeQuarto,
+        subTotal,
+        taxaServico,
+        total
+    )
 
     mostrarQuartos()
     enter()
@@ -334,6 +384,7 @@ fun selecionarQuarto(): Quarto {
         return selecionarQuarto()
     }
     println("Quarto $numeroQuarto selecionado com sucesso!")
+    enter()
     return quarto
 }
 
@@ -341,9 +392,19 @@ fun confirmarReserva(
     valorDiaria: Double,
     qtdDiarias: Int,
     hospedes: MutableList<Hospede>,
-    quartoSelecionado: Quarto
+    quartoSelecionado: Quarto,
+    classeQuarto: String,
+    subTotal: Double,
+    taxaServico: Double,
+    total: Double
 ) {
-    println("$nomeFuncionario, você confirma a hospedagem para ${listarHospedesSelecionados(hospedes)} por $qtdDiarias dias para o quarto ${quartoSelecionado.numero} por R$${valorDiaria * qtdDiarias}? S/N")
+    println("Resumo: ")
+    println("Hóspedes: ${listarHospedesSelecionados(hospedes)}")
+    println("Quarto: ${quartoSelecionado.numero} ($classeQuarto)")
+    println("Subtotal: R$$subTotal")
+    println("Taxa de serviço (10%): R$$taxaServico")
+    println("Total: R$$total")
+    println("$nomeFuncionario, confirmar a reserva? (S/N)")
     val opcao = readln().uppercase()
     when (opcao) {
         "S" -> {
@@ -363,7 +424,17 @@ fun confirmarReserva(
 
         else -> {
             println("Opção inválida. Por favor, responda com S ou N.")
-            return reservarQuarto()
+            enter()
+            return confirmarReserva(
+                valorDiaria,
+                qtdDiarias,
+                hospedes,
+                quartoSelecionado,
+                classeQuarto,
+                subTotal,
+                taxaServico,
+                total
+            )
         }
     }
 }
