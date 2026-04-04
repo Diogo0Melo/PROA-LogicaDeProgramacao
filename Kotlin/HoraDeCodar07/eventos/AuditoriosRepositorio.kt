@@ -9,11 +9,4 @@ object AuditoriosRepositorio {
     fun salvarReserva(auditorio: Auditorio, diaReserva: String): Boolean {
         return auditorio.reservas.add(diaReserva)
     }
-
-    fun pesquisarAuditorio(qtdConvidados: Int): Auditorio {
-        return auditorios.first {
-            it.capacidade >= qtdConvidados && it.disponivel
-        }
-    }
-
 }

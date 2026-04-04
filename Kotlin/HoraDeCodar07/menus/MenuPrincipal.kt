@@ -1,5 +1,6 @@
 package HoraDeCodar07.menus
 
+import HoraDeCodar07.ar_condicionado.manutencaoArCondicionados
 import HoraDeCodar07.auth.loginFuncionario
 import HoraDeCodar07.eventos.reservarEspacoEvento
 import HoraDeCodar07.reservas.reservarQuarto
@@ -19,6 +20,7 @@ fun inicio() {
         2 -> reservarQuarto()
         3 -> reservarEspacoEvento()
         //4 -> abastecimentoDeAutomoveis()
+        5 -> manutencaoArCondicionados()
         //6 -> relatoriosOperacionais()
         //7 -> sairDoHotel()
         else -> erroMenuPrincipal()
