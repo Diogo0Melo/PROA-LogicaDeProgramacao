@@ -1,46 +1,30 @@
-package HoraDeCodar07.ExerciciosSeparados
+package HoraDeCodar07.ar_condicionado
 
-// 6) Ar puro, finalmente.
-
-class Empresa(
-    val nomeEmpresa: String,
-    val valorPorAparelho: Double,
-    val qtdAparelhos: Int,
-    val porcetangemDesconto: Int,
-    val minQtdAparelhosDesconto: Int
-) {
-
-    val valorTotal: Double = calcularValorTotal()
-
-    fun calcularValorTotal(): Double {
-        val valorTotal = this.valorPorAparelho * this.qtdAparelhos
-        if (this.qtdAparelhos >= this.minQtdAparelhosDesconto) {
-            return valorTotal - (valorTotal * (this.porcetangemDesconto / 100.0))
-        }
-        return valorTotal
-
-    }
-}
-
-val empresas: MutableList<Empresa> = mutableListOf()
+import HoraDeCodar07.menus.inicio
+import HoraDeCodar07.menus.nomeFuncionario
+import HoraDeCodar07.utils.pausarFluxo
+import HoraDeCodar07.utils.solicitarNome
 
 fun manutencaoArCondicionados() {
 
     println("MANUTENÇÃO DE AR-CONDICIONADOS")
 
-    val nomeEmpresa = solicitarNomeEmpresa()
+    val nomeEmpresa = solicitarNome("da empresa")
     val valorPorAparelho = solicitarValorPorAparelho()
     val qtdAparelhos = solicitarQtdAparelhos()
     val porcetangemDesconto = solicitarPorcentagemDesconto()
     val minQtdAparelhosDesconto = solicitarMinQtdAparelhosDesconto()
 
     val empresa = Empresa(nomeEmpresa, valorPorAparelho, qtdAparelhos, porcetangemDesconto, minQtdAparelhosDesconto)
-    empresas.add(empresa)
-
-    println("O serviço de $nomeEmpresa, custará ${"%.2f".format(empresa.valorTotal)}")
-    enter()
-
-    return desejaAdicionarMaisEmpresas()
+    val resposta = EmpresasRepositorio.salvarEmpresa(empresa)
+    if (resposta) {
+        println("O serviço de $nomeEmpresa, custará ${empresa.valorTotal}")
+        pausarFluxo()
+        return desejaAdicionarMaisEmpresas()
+    }
+    println("Não foi possível salvar a empresa")
+    pausarFluxo()
+    return manutencaoArCondicionados()
 }
 
 fun solicitarValorPorAparelho(): Double {
@@ -82,8 +66,14 @@ fun desejaAdicionarMaisEmpresas() {
 }
 
 fun definirEmpresaBarata() {
-    val empresaMaisBarata = empresas.minBy { it.valorTotal }
-    println("O orçamento de menor valor é o da ${empresaMaisBarata.nomeEmpresa} por R$${"%.2f".format(empresaMaisBarata.valorTotal)}")
-    enter()
+    val empresaMaisBarata = EmpresasRepositorio.calcularEmpresaMaisBarata()
+    if (empresaMaisBarata == null) {
+        println("Não há empresas cadastradas. Retornando ao menu principal.")
+        pausarFluxo()
+        return inicio()
+    }
+    println("O orçamento de menor valor é o da ${empresaMaisBarata.nomeEmpresa} por R$${empresaMaisBarata.valorTotal}")
+    EmpresasRepositorio.limpar()
+    pausarFluxo()
     return inicio()
 }
