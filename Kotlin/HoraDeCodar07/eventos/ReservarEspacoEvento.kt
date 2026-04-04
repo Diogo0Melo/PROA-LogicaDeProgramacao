@@ -158,7 +158,7 @@ fun confirmarReserva(auditorio: Auditorio, diaReserva: String, custoTotal: Doubl
 
 fun reservaConfirmada(auditorio: Auditorio, diaReserva: String, custoTotal: Double) {
     val resposta = AuditoriosRepositorio.salvarReserva(auditorio, diaReserva)
-    if(resposta) {
+    if (resposta) {
         RelatoriosRepositorio.receitaTotalEventos += custoTotal
         println("Reserva efetuada com sucesso!")
     }

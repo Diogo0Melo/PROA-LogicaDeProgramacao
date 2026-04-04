@@ -15,7 +15,7 @@ fun excluirHospede() {
     val hospedeEncontrado = HospedesRepositorio.pesquisarPorNomeExato(nomeDeletar)
     if (hospedeEncontrado != null) {
         val resposta = HospedesRepositorio.deletarHospede(hospedeEncontrado)
-        if(resposta) println("Hóspede ${hospedeEncontrado.nome} removido com sucesso.")
+        if (resposta) println("Hóspede ${hospedeEncontrado.nome} removido com sucesso.")
         else println("Erro ao remover hóspede. Tente novamente.")
     } else {
         println("Hóspede não encontrado. Por favor, tente novamente.")

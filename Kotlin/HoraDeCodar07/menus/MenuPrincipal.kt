@@ -1,6 +1,5 @@
 package HoraDeCodar07.menus
 
-import AntigoHC07.ExerciciosSeparados.sairDoHotel
 import HoraDeCodar07.abastecimento.abastecimentoDeAutomoveis
 import HoraDeCodar07.ar_condicionado.manutencaoArCondicionados
 import HoraDeCodar07.auth.loginFuncionario
@@ -8,6 +7,7 @@ import HoraDeCodar07.eventos.reservarEspacoEvento
 import HoraDeCodar07.relatorios.relatoriosOperacionais
 import HoraDeCodar07.reservas.reservarQuarto
 import HoraDeCodar07.utils.erroMenuPrincipal
+import HoraDeCodar07.utils.sairDoHotel
 
 const val NOME_HOTEL = "Tasokare Hotel"
 val nomeFuncionario: String = loginFuncionario()

@@ -1,6 +1,6 @@
 package HoraDeCodar07.eventos
 
-class Auditorio(
+data class Auditorio(
     val nome: String,
     val capacidade: Int,
     val capacidadeAdicional: Int,

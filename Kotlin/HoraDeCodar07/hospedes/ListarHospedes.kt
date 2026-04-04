@@ -15,7 +15,7 @@ fun listarHospedes() {
     return menuHospedes()
 }
 
-fun listarHospedesSemReserva(){
+fun listarHospedesSemReserva() {
     println("LISTA DE HÓSPEDES SEM RESERVA\n")
     val listaHospedes = HospedesRepositorio.listarHospedesSemReserva()
     listaHospedes?.forEachIndexed { indice, hospede ->

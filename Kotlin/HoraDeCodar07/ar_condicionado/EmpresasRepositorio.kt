@@ -7,11 +7,13 @@ object EmpresasRepositorio {
     fun salvarEmpresa(empresa: Empresa): Boolean {
         return empresas.add(empresa)
     }
+
     fun calcularEmpresaMaisBarata(): Empresa? {
-        if(empresas.isEmpty()) return null
+        if (empresas.isEmpty()) return null
         return empresas.minBy { it.valorTotal }
     }
-    fun limpar(): Boolean{
+
+    fun limpar(): Boolean {
         historico.addAll(empresas)
         empresas.clear()
         return true

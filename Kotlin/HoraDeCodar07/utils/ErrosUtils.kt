@@ -13,8 +13,3 @@ fun erroMenuHospedes() {
     return menuHospedes()
 }
 
-fun voltarAoMenuPrincipal() {
-    println("Retornando ao menu principal.")
-    pausarFluxo()
-    inicio()
-}

@@ -67,7 +67,7 @@ fun desejaAdicionarMaisEmpresas() {
 
 fun definirEmpresaBarata() {
     val empresaMaisBarata = EmpresasRepositorio.calcularEmpresaMaisBarata()
-    if(empresaMaisBarata == null){
+    if (empresaMaisBarata == null) {
         println("Não há empresas cadastradas. Retornando ao menu principal.")
         pausarFluxo()
         return inicio()

@@ -37,7 +37,7 @@ fun pesquisarHospedesPrefixo() {
     if (hospedeEncontrado != null) {
         println("Resultados:")
         hospedeEncontrado.forEachIndexed { indice, hospede ->
-            println("[${indice+1}] Hóspede encontrado: ${hospede.nome}, Quarto: ${hospede.quarto?.numero ?: "Não hospedado"}, Data/Hora do cadastro: ${hospede.dataCadastro}")
+            println("[${indice + 1}] Hóspede encontrado: ${hospede.nome}, Quarto: ${hospede.quarto?.numero ?: "Não hospedado"}, Data/Hora do cadastro: ${hospede.dataCadastro}")
         }
     } else {
         println("Nenhum hóspede encontrado. Por favor, tente novamente.")

@@ -8,7 +8,7 @@ fun listarQuartosDisponiveis() {
     }
 }
 
-fun listarQuartos(){
+fun listarQuartos() {
     println("QUARTOS DO HOTEL\n")
     val quartos = QuartosRepositorio.listarQuartos()
     quartos.forEach { quarto ->

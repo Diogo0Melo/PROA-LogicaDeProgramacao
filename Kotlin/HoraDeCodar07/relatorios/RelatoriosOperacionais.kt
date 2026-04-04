@@ -3,7 +3,7 @@ package HoraDeCodar07.relatorios
 import HoraDeCodar07.menus.inicio
 import HoraDeCodar07.utils.pausarFluxo
 
-fun relatoriosOperacionais(){
+fun relatoriosOperacionais() {
 
     RelatoriosRepositorio.atualizarRelatorio()
 

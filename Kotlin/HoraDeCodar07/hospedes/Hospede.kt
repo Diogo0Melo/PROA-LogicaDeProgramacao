@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 
 data class Hospede(var nome: String, var quarto: Quarto? = null) {
     val dataCadastro: String = formatarDataHora(LocalDateTime.now())
+
     init {
         println("$nome cadastrado(a) com sucesso.")
     }

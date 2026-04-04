@@ -1,9 +1,9 @@
 package HoraDeCodar07.relatorios
 
-import AntigoHC07.formatarPreco
 import HoraDeCodar07.eventos.AuditoriosRepositorio
 import HoraDeCodar07.hospedes.HospedesRepositorio
 import HoraDeCodar07.reservas.QuartosRepositorio
+import HoraDeCodar07.utils.formatarPreco
 
 object RelatoriosRepositorio {
     var totalReservasConfirmadas: Int = 0
