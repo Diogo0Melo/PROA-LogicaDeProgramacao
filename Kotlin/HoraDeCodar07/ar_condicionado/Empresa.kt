@@ -10,7 +10,8 @@ data class Empresa(
     val minQtdAparelhosDesconto: Int,
     val valorDeslocamento: Double = 150.0
 ) {
-    val valorTotal: Double = formatarPreco(calcularValorTotal())
+    val valorTotal: Double
+        get() = formatarPreco(calcularValorTotal())
 
     fun calcularValorTotal(): Double {
         val subTotal = this.valorPorAparelho * this.qtdAparelhos
