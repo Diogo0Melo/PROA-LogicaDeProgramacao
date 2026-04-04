@@ -1,6 +1,7 @@
 package HoraDeCodar07.eventos
 
 import HoraDeCodar07.menus.inicio
+import HoraDeCodar07.relatorios.RelatoriosRepositorio
 import HoraDeCodar07.utils.formatarPreco
 import HoraDeCodar07.utils.pausarFluxo
 import HoraDeCodar07.utils.solicitarNome
@@ -32,6 +33,7 @@ fun reservarEspacoEvento() {
     val agua = Item("Água", 0.4, qtdConvidados, 0.5)
     val salgado = Item("Salgado", 0.34, qtdConvidados, 7.0)
     val custoBuffet = formatarPreco(cafe.custoTotal + agua.custoTotal + salgado.custoTotal)
+    val custoTotal = formatarPreco(garcons.custoTotal + custoBuffet)
 
     println("O evento precisará de ${cafe.quantidade} litros de café, ${agua.quantidade} litros de água, ${salgado.quantidade} salgados.")
     pausarFluxo()
@@ -46,10 +48,10 @@ fun reservarEspacoEvento() {
     println("\nCusto dos garçons: R$${garcons.custoTotal}")
     println("Custo do Buffet: R$${custoBuffet}")
 
-    println("\nValor total do Evento: ${formatarPreco(garcons.custoTotal + custoBuffet)}")
+    println("\nValor total do Evento: $custoTotal")
     pausarFluxo()
 
-    return confirmarReserva(auditorio, diaEvento)
+    return confirmarReserva(auditorio, diaEvento, custoTotal)
 }
 
 fun solicitarQtdConvidados(): Int {
@@ -67,9 +69,9 @@ fun solicitarQtdConvidados(): Int {
 fun retornarAuditorio(qtdConvidados: Int): Auditorio {
     return when (qtdConvidados) {
         in 1..220 -> {
-            val cadeirasExtras = if (qtdConvidados > 150) "inclua mais ${qtdConvidados - 150} cadeiras" else ""
+            val cadeirasExtras = if (qtdConvidados > 150) "(inclua mais ${qtdConvidados - 150} cadeiras)" else ""
             println(
-                "Use o auditório Laranja ($cadeirasExtras)"
+                "Use o auditório Laranja $cadeirasExtras"
             )
             AuditoriosRepositorio.auditorios[0]
         }
@@ -143,20 +145,21 @@ fun solicitarDuracaoEvento(diaEvento: String, horarioEvento: Int): Int {
 
 }
 
-fun confirmarReserva(auditorio: Auditorio, diaReserva: String) {
+fun confirmarReserva(auditorio: Auditorio, diaReserva: String, custoTotal: Double) {
     println("Gostaria de efetuar a reserva? S/N")
     val escolha = readln().uppercase()
 
     return when (escolha) {
-        "S" -> reservaConfirmada(auditorio, diaReserva)
+        "S" -> reservaConfirmada(auditorio, diaReserva, custoTotal)
         "N" -> reservaCancelada()
-        else -> confirmarReserva(auditorio, diaReserva)
+        else -> confirmarReserva(auditorio, diaReserva, custoTotal)
     }
 }
 
-fun reservaConfirmada(auditorio: Auditorio, diaReserva: String) {
+fun reservaConfirmada(auditorio: Auditorio, diaReserva: String, custoTotal: Double) {
     val resposta = AuditoriosRepositorio.salvarReserva(auditorio, diaReserva)
     if(resposta) {
+        RelatoriosRepositorio.receitaTotalEventos += custoTotal
         println("Reserva efetuada com sucesso!")
     }
     pausarFluxo()

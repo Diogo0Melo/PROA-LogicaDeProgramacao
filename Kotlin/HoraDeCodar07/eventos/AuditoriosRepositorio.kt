@@ -1,12 +1,13 @@
 package HoraDeCodar07.eventos
 
 object AuditoriosRepositorio {
-    val auditorios = arrayOf(
+    val auditorios = listOf(
         Auditorio("Auditório laranja", 150, 70),
         Auditorio("Auditório colorado", 350, 0)
     )
 
-    fun salvarReserva(auditorio: Auditorio, diaReserva: String): Boolean {
-        return auditorio.reservas.add(diaReserva)
-    }
+    fun salvarReserva(auditorio: Auditorio, diaReserva: String): Boolean = auditorio.reservas.add(diaReserva)
+
+    fun listarReservas(): List<String> = auditorios.flatMap { it.reservas }
+
 }

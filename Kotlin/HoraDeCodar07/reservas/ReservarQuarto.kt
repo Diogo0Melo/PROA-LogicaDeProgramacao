@@ -5,6 +5,7 @@ import HoraDeCodar07.hospedes.HospedesRepositorio
 import HoraDeCodar07.hospedes.listarHospedesSemReserva
 import HoraDeCodar07.menus.inicio
 import HoraDeCodar07.menus.nomeFuncionario
+import HoraDeCodar07.relatorios.RelatoriosRepositorio
 import HoraDeCodar07.utils.formatarPreco
 import HoraDeCodar07.utils.pausarFluxo
 
@@ -150,6 +151,8 @@ fun confirmarReserva(
     when (opcao) {
         "S" -> {
             QuartosRepositorio.salvarReserva(quartoSelecionado, hospedes, qtdDiarias)
+            RelatoriosRepositorio.totalReservasConfirmadas++
+            RelatoriosRepositorio.receitaTotalHospedagem += total
             hospedes.forEach { HospedesRepositorio.adicionarQuarto(it, quartoSelecionado) }
             println("Hospedagem confirmada para ${hospedes.size} hospede(s) no quarto ${quartoSelecionado.numero} por $qtdDiarias dias. Valor total: R$${total}")
             return
