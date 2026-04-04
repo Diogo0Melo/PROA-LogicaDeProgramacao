@@ -1,6 +1,7 @@
 package HoraDeCodar07.menus
 
 import HoraDeCodar07.auth.loginFuncionario
+import HoraDeCodar07.eventos.reservarEspacoEvento
 import HoraDeCodar07.reservas.reservarQuarto
 import HoraDeCodar07.utils.erroMenuPrincipal
 
@@ -16,7 +17,7 @@ fun inicio() {
     return when (escolha) {
         1 -> menuHospedes()
         2 -> reservarQuarto()
-        //3 -> reservarEspacoEventos()
+        3 -> reservarEspacoEvento()
         //4 -> abastecimentoDeAutomoveis()
         //6 -> relatoriosOperacionais()
         //7 -> sairDoHotel()
