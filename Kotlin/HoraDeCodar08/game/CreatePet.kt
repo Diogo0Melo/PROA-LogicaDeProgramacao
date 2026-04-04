@@ -2,7 +2,9 @@ package HoraDeCodar08.game
 
 import HoraDeCodar08.animals.*
 import HoraDeCodar08.base.Pet
+import HoraDeCodar08.utils.formatName
 import HoraDeCodar08.utils.pressEnterToContinue
+import HoraDeCodar08.utils.validateName
 import HoraDeCodar08.utils.wait
 
 fun choosePet() {
@@ -35,7 +37,12 @@ fun choosePet() {
 
 fun choosePetName(species: String) {
     println("Escolha um nome para seu $species:")
-    val name = readln().trim().ifEmpty { readln() }
+    var name = readln().trim()
+    if (!validateName(name)) {
+        println("Nome inválido. O nome deve ter entre 3 e 30 caracteres e conter apenas letras e espaços.")
+        return choosePetName(species)
+    }
+    name = formatName(name)
     return when (species) {
         "cachorro" -> runVirtualPet(Dog(name))
         "gato" -> runVirtualPet(Cat(name))

@@ -14,3 +14,14 @@ fun wait(action: String, timeToWait: Int) {
     }
     println("")
 }
+
+fun validateName(name: String): Boolean {
+    // Regex permite apenas letras com o mínimo de 3 e no máximo 30 caracteres
+    val NAME_REGEX = Regex("""^(?=.{3,30})\p{L}+(?: \p{L}+)*$""")
+    return NAME_REGEX.matches(name)
+}
+
+fun formatName(name: String): String {
+    val formatedName = name.lowercase()
+    return formatedName.split(" ").joinToString(" ") { it.replaceFirstChar { it.uppercase() } }
+}

@@ -117,7 +117,7 @@ abstract class Pet {
     private fun increaseAge() = age++
 
     private fun increaseHunger(hours: Int) {
-        val pointsChanged = hours * 5
+        val pointsChanged = hours * 3
         hungerLevel += pointsChanged
         println("A fome de $name aumentou em $pointsChanged pontos")
         return
