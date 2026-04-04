@@ -18,6 +18,11 @@ Contém as soluções e sistemas desenvolvidos na linguagem Kotlin, evoluindo de
   * **Gestão de Eventos** (reserva de auditórios, custo de garçons e buffet)
   * **Manutenção** (ar-condicionado) e **Abastecimento** de veículos
   * Geração de **Relatórios**
+* **HoraDeCodar08**: Um projeto simulando um jogo de **Bichinho Virtual (Virtual Pet)**, focado em Orientação a Objetos. O sistema está modularizado contemplando:
+  * **Base** (definição da estrutura principal e atributos do Pet)
+  * **Lógica do Jogo** (criação de pets, validações de entrada e mecânicas de interação do Virtual Pet)
+  * **Catálogo de Animais** (implementações específicas de animais como Cachorro, Gato, Cavalo, Coelho, etc.)
+  * **Utilitários** (funções auxiliares para o jogo)
 
 ### 🔹 Portugol (`Portugol/`)
 Contém os algoritmos desenvolvidos em pseudocódigo utilizando o **Portugol Studio**. Esta etapa foca na base puramente lógica antes da transição para o Kotlin.
@@ -31,5 +36,3 @@ Contém os algoritmos desenvolvidos em pseudocódigo utilizando o **Portugol Stu
 
 ## 🎯 Objetivo
 Desenvolver, consolidar e evoluir o pensamento lógico de programação, começando pelas bases dos algoritmos e progredindo até a construção de mini-sistemas bem estruturados, utilizando boas práticas e separação de responsabilidades.
-
----
