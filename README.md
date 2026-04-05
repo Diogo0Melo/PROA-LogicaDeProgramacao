@@ -31,11 +31,11 @@ Contém os algoritmos desenvolvidos em pseudocódigo utilizando o **Portugol Stu
 * 🏦 Projeto do **HoraDeCodar05** (Caixa Eletrônico - Banco Tchan).
 
 ## 💻 Tecnologias e Ferramentas Utilizadas
-* 🟣 **Kotlin** - Linguagem principal de desenvolvimento.
-* 📝 **Portugol (Portugol Studio)** - Construção de algoritmos e pseudocódigo.
-* 💻 **IntelliJ IDEA** - IDE para a construção de sistemas completos em Kotlin.
-* 🐙 **Git e GitHub** - Controle de versão e hospedagem do repositório.
-* ☕ **JDK 21+ (Java Development Kit)** - Homologado e sugerido para execução do código Kotlin.
+* 🟣 **Kotlin**
+* 📝 **Portugol (Portugol Studio)**
+* 💻 **IntelliJ IDEA**
+* 🐙 **Git e GitHub**
+* ☕ **JDK 21+ (Java Development Kit)**
 
 ## 🎯 Objetivo
 Desenvolver, consolidar e evoluir o pensamento lógico de programação, começando pelas bases dos algoritmos e progredindo até a construção de mini-sistemas bem estruturados, utilizando boas práticas e separação de responsabilidades.
@@ -43,7 +43,7 @@ Desenvolver, consolidar e evoluir o pensamento lógico de programação, começa
 ## 🚀 Como Executar (Passo a Passo)
 
 ### 🟣 Para os projetos em Kotlin:
-1. Clique no botão verde **Code** e baixe o ZIP completo deste repositório, ou faça o download apenas da pasta específica do exercício que deseja testar (ex: `HoraDeCodar07`).
+1. Clique no botão verde **Code** e baixe o ZIP completo deste repositório.
 2. Extraia os arquivos do ZIP para uma pasta em seu computador.
 3. Abra a sua IDE de preferência (como o IntelliJ IDEA) e inicie um **Novo Projeto Kotlin**.
 4. Copie a pasta que você extraiu e cole para dentro do diretório principal de código do seu novo projeto (geralmente dentro da pasta `src/main/kotlin`).
