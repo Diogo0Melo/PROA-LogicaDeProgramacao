@@ -16,7 +16,8 @@ Contém as soluções e sistemas desenvolvidos na linguagem Kotlin, evoluindo de
   * 🛏️ **Gestão de Hóspedes** (cadastro, pesquisa, atualização e exclusão)
   * 📅 **Reservas de Quartos**
   * 🎉 **Gestão de Eventos** (reserva de auditórios, custo de garçons e buffet)
-  * 🛠️ **Manutenção** (ar-condicionado) e ⛽ **Abastecimento** de veículos
+  * 🛠️ **Manutenção** (ar-condicionado)
+  * ⛽ **Abastecimento** de veículos
   * 📊 Geração de **Relatórios**
 * 🐾 **HoraDeCodar08**: Um projeto simulando um jogo de **Bichinho Virtual (Virtual Pet)**, focado em Orientação a Objetos. O sistema está modularizado contemplando:
   * 🧬 **Base** (definição da estrutura principal e atributos do Pet)
