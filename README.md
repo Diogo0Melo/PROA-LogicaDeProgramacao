@@ -48,6 +48,41 @@ Contém os algoritmos desenvolvidos em pseudocódigo utilizando o **Portugol Stu
 * 🐙 **Git e GitHub**
 * ☕ **JDK 21+ (Java Development Kit)**
 
+## 📚 Demonstrações
+> Clique nos títulos abaixo para expandir e assistir ao vídeo de cada exercício em execução.
+<details>
+  <summary><b>🎬 Hora de Codar 05 - BancoTchan (Portugol)</b></summary>
+  <br>
+  <p align="center">
+    <video src="https://github.com/user-attachments/assets/7230403f-470a-41dc-aa88-1e41cd20af82" width="100%" controls>
+      Seu navegador não suporta a reprodução de vídeos.
+    </video>
+  </p>
+</details>
+
+<details>
+  <summary><b>🎬 Hora de Codar 05 - BancoTchan (Kotlin)</b></summary>
+  <br>
+  <p align="center">
+    <video src="https://github.com/user-attachments/assets/dab7165b-35a3-46bf-9fd3-83f5fa46ba22" width="100%" controls>Seu navegador não suporta a reprodução de vídeos.</video>
+
+  </p>
+</details>
+<details>
+  <summary><b>🎬 Hora de Codar 07 - Tasokare Hotel (Kotlin)</b></summary>
+  <br>
+  <p align="center">
+    <video src="https://github.com/user-attachments/assets/0e8cb645-7bc1-4f4c-86c7-51cd5c945e8a" width="100%" controls>Seu navegador não suporta a reprodução de vídeos.</video>
+  </p>
+</details>
+<details>
+  <summary><b>🎬 Hora de Codar 08 - Pet Virtual (Kotlin)</b></summary>
+  <br>
+  <p align="center">
+    <video src="https://github.com/user-attachments/assets/42be03b1-ba57-4ab8-96d9-1c1f269abe7e" width="100%" controls>Seu navegador não suporta a reprodução de vídeos.</video>
+  </p>
+</details>
+
 ## 🎯 Objetivo
 Desenvolver, consolidar e evoluir o pensamento lógico de programação, começando pelas bases dos algoritmos e progredindo até a construção de mini-sistemas bem estruturados, utilizando boas práticas e separação de responsabilidades.
 
